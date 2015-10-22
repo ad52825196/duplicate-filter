@@ -5,7 +5,7 @@ import java.util.*;
  * This class can filter out all duplicated elements in a List Collection. It
  * can read input from a file and write processed data into a file. It can take
  * a List Collection as input and return a processed ArrayList Collection. It
- * can print some useful statistics to the console.
+ * can print some useful statistics to the console if required.
  * 
  * @author Zhen Chen
  *
@@ -13,6 +13,15 @@ import java.util.*;
 
 public class Filter {
 	private List<String> input, output;
+
+	public static void main(String[] args) {
+		final String inputFileName = "list.txt";
+		final String outputFileName = "output.txt";
+		Filter myFilter = new Filter(inputFileName);
+
+		myFilter.process(true);
+		myFilter.writeFile(outputFileName);
+	}
 
 	public Filter() {
 		input = new ArrayList<String>();
@@ -92,15 +101,6 @@ public class Filter {
 
 	public List<String> getResult() {
 		return output;
-	}
-
-	public static void main(String[] args) {
-		final String inputFileName = "list.txt";
-		final String outputFileName = "output.txt";
-		Filter myFilter = new Filter(inputFileName);
-
-		myFilter.process(true);
-		myFilter.writeFile(outputFileName);
 	}
 
 }

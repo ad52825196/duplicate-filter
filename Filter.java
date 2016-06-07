@@ -57,11 +57,12 @@ public class Filter {
 	}
 
 	public void writeFile(String filename) {
-		try (PrintWriter writer = new PrintWriter(filename)) {
+		try (Writer writer = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(filename), "UTF8"))) {
 			for (String line : output) {
-				writer.println(line);
+				writer.write(line);
+				writer.write(System.lineSeparator());
 			}
-		} catch (FileNotFoundException e) {
+		} catch (IOException e) {
 			System.out.println("Could not create or open file " + filename);
 		}
 	}

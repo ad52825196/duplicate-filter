@@ -16,12 +16,10 @@ public class Filter {
 
 	public static void main(String[] args) {
 		final String INPUT_FILENAME = "list.txt";
-		final String OUTPUT_FILENAME = "output.txt";
+		final String OUTPUT_FILENAME = "list.txt";
 		Filter myFilter = new Filter(INPUT_FILENAME);
-
-		if (myFilter.process(true)) {
-			myFilter.writeFile(OUTPUT_FILENAME);
-		}
+		myFilter.process(true);
+		myFilter.writeFile(OUTPUT_FILENAME);
 	}
 
 	public Filter() {
@@ -68,11 +66,11 @@ public class Filter {
 		}
 	}
 
-	public boolean process() {
-		return process(false);
+	public void process() {
+		process(false);
 	}
 
-	public boolean process(boolean showStats) {
+	public void process(boolean showStats) {
 		Map<String, Integer> stats = new HashMap<String, Integer>();
 		Integer value;
 
@@ -98,12 +96,6 @@ public class Filter {
 					System.out.printf(format, s, value.toString());
 				}
 			}
-		}
-
-		if (stats.isEmpty()) {
-			return false;
-		} else {
-			return true;
 		}
 	}
 

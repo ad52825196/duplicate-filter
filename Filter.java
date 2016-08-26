@@ -22,9 +22,8 @@ public class Filter {
 		myFilter.writeFile(OUTPUT_FILENAME);
 	}
 
-	public Filter() {
+	private Filter() {
 		input = new ArrayList<String>();
-		output = new ArrayList<String>();
 	}
 
 	public Filter(final List<Object> list) {
@@ -51,7 +50,7 @@ public class Filter {
 				}
 			}
 		} catch (FileNotFoundException e) {
-			System.out.println("Could not find file " + filename);
+			System.err.println("Could not find file " + filename);
 		}
 	}
 
@@ -62,7 +61,7 @@ public class Filter {
 				writer.write(System.lineSeparator());
 			}
 		} catch (IOException e) {
-			System.out.println("Could not create or open file " + filename);
+			System.err.println("Could not create or open file " + filename);
 		}
 	}
 
@@ -72,28 +71,23 @@ public class Filter {
 
 	public void process(boolean showStats) {
 		Map<String, Integer> stats = new HashMap<String, Integer>();
-		Integer value;
 
 		for (String s : input) {
-			if (!output.contains(s)) {
-				output.add(s);
-			} else if (showStats) {
-				value = stats.containsKey(s) ? (stats.get(s) + 1) : 2;
-				stats.put(s, value);
-			}
+			stats.put(s, stats.getOrDefault(s, 0) + 1);
 		}
-
+		output = new ArrayList<String>(stats.keySet());
 		Collections.sort(output);
 
 		if (showStats) {
-			if (stats.isEmpty()) {
+			if (input.size() == output.size()) {
 				System.out.println("No duplicated elements.");
 			} else {
 				String format = "  %-20s  %-6s  %n";
 				System.out.printf(format, "Item", "Times");
 				for (String s : stats.keySet()) {
-					value = stats.get(s);
-					System.out.printf(format, s, value.toString());
+					if (stats.get(s) > 1) {
+						System.out.printf(format, s, stats.get(s).toString());
+					}
 				}
 			}
 		}

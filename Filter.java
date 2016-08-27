@@ -84,9 +84,9 @@ public class Filter {
 			} else {
 				String format = "  %-20s  %-6s  %n";
 				System.out.printf(format, "Item", "Times");
-				for (String s : stats.keySet()) {
-					if (stats.get(s) > 1) {
-						System.out.printf(format, s, stats.get(s).toString());
+				for (final Map.Entry<String, Integer> e : stats.entrySet()) {
+					if (e.getValue() > 1) {
+						System.out.printf(format, e.getKey(), e.getValue().toString());
 					}
 				}
 			}
